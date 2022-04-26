@@ -95,7 +95,6 @@ int (* scePowerGetCpuClockFrequency)(void) = NULL;
 
 int vshImposeGetParam(u32 value);
 int sctrlHENSetSpeed(int cpufreq, int busfreq);
-int sceSysconCtrlLED(int SceLED, int state);
 int sceKernelPowerTick (int type);
 
 int slideState;
