@@ -1,73 +1,50 @@
 ZeroVSH Patcher v0.4 - NightStar3 and codestation
+Lite mod by Vento
+
+-- Original project  --
+
+Original code can be found here https://github.com/NightStar3/zerovsh-patcher
+
+---- Mod Description ----
+
+Removed funtionalities found in the original plugin:
+* PSP GO Calendar/Clock on 2K/3K PSP
+* Led Control
+* Brightness Control
+* CPU Clock Control
+* .ini settings file loading
+* Support for older FWs < 6.60
+
+Now the plugin expect the PSP to be at least on FW version 6.60 and it loads custom files from "ef0:/PSP/VSH/" or "ms0:/PSP/VSH/" depending if you added "USE_EF0" as compile paramenter.
+
+---- Plugin Description ----
 
 ZeroVSH Patcher is a plugin that allows users to customize their PSP to the 
 fullest extent without writting to the flash0. ZeroVSH Patcher redirects the
 loading of various file types from flash to your memory stick or internal storage, 
 thus removing the fear of bricking.
 
-From version 0.2, there is support for the psp go's clock and calendar on other psp models (currently psp 1k is not supported)
 Please scroll down for further information. 
-
 
 ---- How to Use ----
 
-Copy zerovsh_patcher.prx and zerovsh.ini to your seplugins folder
+Copy zerovsh_patcher.prx in your seplugins folder.
 
 Just place all the files you want to load from your memory stick or internal storage in the 
-folder which you have RedirPath set to in zerovsh.ini (Default is (root):/PSP/VSH) and let the plugin do the rest of the work
-
-
----- Enabling the clock and calendar ----
-
-------------------------------
-You must be on a psp model that isn't a 1k, due to the fact that there is a memory bug.
-We will try to get this fixed in version 0.4
-------------------------------
-
-Open up zerovsh.ini and set ClockAndCalendar to Enabled
-
-Then, navigate to the /slide folder and place the files slide_plugin_XXX.rco and slide_plugin_XXX.prx in the folder which you have
-RedirPath set to in zerovsh.ini (Default is (root):/PSP/VSH) and rename them to slide_plugin.rco and slide_plugin.prx
-
-NOTE: If you have a umd inserted
------------> If the loading icon (small animation going on in the bottom right corner of your screen) is visible, wait for it to pass before
-		trying to trigger the clock and calendar
-
-In order to load it wait ~2 seconds without pressing any buttons, and press the button you have StartBtn set to
-In order to stop it, just press the button you have StopBtn set to
-
+folder "ef0:/PSP/VSH/" or "ms0:/PSP/VSH/" depending if you added "USE_EF0" as compile paramenter.
 
 ---- Bugs ----
 
 -Does not work on 1k psp
-
-(Feel free to report new bugs)
-
 
 ---- For Developers ----
 
 You must have the pspsdk or psptoolchain set up in order to compile the plugin
 Just run the script in the trunk corresponding to your operating system, and it should compile fine
 
-The plugin will be compiled to the /bin folder in the trunk
+The plugin will be compiled to the /bin folder in the trunk.
 
-
--- Note --
-
-If you have a patch you want to submit then make a pull request on github, and we add your name to the credits.
-
-If you are interested in becoming an active developer for the project, contact one of the project leaders
-and we shall give your rights to the git repo, if you qualify
-
-You can download the source code from https://github.com/NightStar3/zerovsh-patcher
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-Check @Zer0Shad0w / @codestation on Twitter for updates.
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-CFW/HEN's supported:
+-- CFW/HEN's supported --
 
 * M33
 * TN
@@ -76,8 +53,7 @@ CFW/HEN's supported:
 * GEN
 * more, but untested
 
-
-File types supported:
+-- File types supported --
 
 * Fonts - .pgf
 * Bitmap Images - .bmp
@@ -86,22 +62,3 @@ File types supported:
 * Modules - .prx
 * default theme - .dat
 * (more to come hopefully)
-
-
-Changelog
-v0.4:
-[+] Added support for FW 6.61
-v0.3:
-[+] Fixed bt prompt bug
-[+] Fixed battery information bug
-[+] Fixed umd bugs
-[+] Fixed some plugin incompatibilities
-[+] Optimized some code
-[+] Added custom button config for clock
-v0.2:
-[+] Support for PSPGO's clock and calendar on other models (non-1k atm)
-[+] Added 5.70 support
-[+] dat file support
-[+] Added config support: zerovsh.ini
-v0.1:
-[+]First release
