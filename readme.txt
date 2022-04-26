@@ -14,6 +14,8 @@ Removed funtionalities found in the original plugin:
 * CPU Clock Control
 * .ini settings file loading
 * Support for older FWs < 6.60
+* User thread (now only the kernel one is present)
+* All sceKernelDelayThread calls
 
 Now the plugin expect the PSP to be at least on FW version 6.60 and it loads custom files from "ef0:/PSP/VSH/" or "ms0:/PSP/VSH/" depending if you added "USE_EF0" as compile paramenter.
 
