@@ -32,10 +32,11 @@ Please scroll down for further information.
 
 ---- How to Use ----
 
-Copy zerovsh_patcher.prx in your seplugins folder and enable it inside VSH.TXT (or PLUGIN.TXT if you are on ARK CFW).
+Copy either zerovsh_patcher_ef0.prx or zerovsh_patcher_ms0.prx in your seplugins folder and enable it inside VSH.TXT (or PLUGIN.TXT if you are on ARK CFW).
 
-Just place all the files you want to load from your memory stick or internal storage in the 
-folder "ef0:/PSP/VSH/" or "ms0:/PSP/VSH/" depending if you added "USE_EF0" as compile paramenter.
+zerovsh_patcher_ef0.prx can be used only on a PSP GO and will load files from the PSP GO internal storage at this path "ef0:/PSP/VSH/".
+
+zerovsh_patcher_ms0.prx will load files from the Memory Stick at this path "ms0:/PSP/VSH/".
 
 ---- Bugs ----
 
