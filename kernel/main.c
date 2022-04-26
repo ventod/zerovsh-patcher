@@ -53,7 +53,7 @@ typedef struct {
 	const char *modfile;
 } modules;
 
-modules g_modules_mod[] = {
+const modules g_modules_mod[] = {
         { "vsh_module", "vshmain.prx" },
         { "scePaf_Module", "paf.prx" },
         { "sceVshCommonGui_Module", "common_gui.prx" },
@@ -68,7 +68,6 @@ PspIoDrv *lflash;
 PspIoDrv *fatms;
 static PspIoDrvArg * ms_drv = NULL;
 STMOD_HANDLER previous = NULL;
-int brightness = -1;
 
 enum zeroCtrlSlideState {
         ZERO_SLIDE_LOADING = 1,
