@@ -21,7 +21,6 @@
 #include <pspiofilemgr.h>
 #include <pspiofilemgr_fcntl.h>
 #include <pspsysmem_kernel.h>
-#include <pspreg.h>
 
 // from CFW SDK
 #include "pspmodulemgr_kernel.h"
@@ -362,38 +361,6 @@ void zeroCtrlHookModule(void) {
         //zeroCtrlWriteDebug("ProbeExecutableObject nid: %08X, addr: %08X\n", moduleprobe_nid, (u32)sceKernelProbeExecutableObject);
     }
 }
-//OK
-int set_registry_value(const char *dir, const char *name, unsigned int val)
-{
-	int ret = 0;
-	struct RegParam reg;
-	REGHANDLE h;
-
-	memset(&reg, 0, sizeof(reg));
-	reg.regtype = 1;
-	reg.namelen = strlen("/system");
-	reg.unk2 = 1;
-	reg.unk3 = 1;
-	strcpy(reg.name, "/system");
-	if(sceRegOpenRegistry(&reg, 2, &h) == 0)
-	{
-		REGHANDLE hd;
-		if(!sceRegOpenCategory(h, dir, 2, &hd))
-		{
-			if(!sceRegSetKeyValue(hd, name, &val, 4))
-			{
-				ret = 1;
-				sceRegFlushCategory(hd);
-			}
-			sceRegCloseCategory(hd);
-		}
-		sceRegFlushRegistry(h);
-		sceRegCloseRegistry(h);
-	}
-
-	return ret;
-}
-
 //OK
 int zeroCtrlLoadStartModule(SceSize args UNUSED, void *argp UNUSED) {	
 	SceUID modid;
