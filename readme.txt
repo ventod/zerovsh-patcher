@@ -17,7 +17,7 @@ Removed funtionalities found in the original plugin:
 * User thread (now only the kernel one is present)
 * All sceKernelDelayThread calls
 
-Now the plugin expect the PSP to be at least on FW version 6.60 and it loads custom files from "ef0:/PSP/VSH/" or "ms0:/PSP/VSH/" depending if you added "USE_EF0" as compile paramenter.
+Now the plugin expect the PSP to be at least on FW version 6.60 and it loads custom files from "ef0:/PSP/VSH/" (internal storage PSP GO) or "ms0:/PSP/VSH/" (memory stick) depending if you used zerovsh_patcher_ef0.prx or zerovsh_patcher_ms0.prx.
 
 There might be other unused/useless code left around, feel free to open a pull request or an issue.
 
