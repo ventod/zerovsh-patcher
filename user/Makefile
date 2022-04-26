@@ -1,5 +1,5 @@
 TARGET = zerovsh_upatcher
-OBJS = main.o import.o stub.o
+OBJS = main.o import.o
 
 INCDIR =
 EXTRA_WARNS= -Wextra -Wfloat-equal -Wundef -Wshadow -Wpointer-arith -Wwrite-strings -Wunreachable-code

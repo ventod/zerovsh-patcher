@@ -47,7 +47,6 @@ PSP_MAIN_THREAD_ATTR(0);
 #define REDIRECT_FUNCTION(a, f) _sw(0x08000000 | (((u32)(f) & 0x0FFFFFFC) >> 2), a); _sw(0x00000000, a+4); 
 #define MAKE_JUMP(a, f) _sw(0x08000000 | (((u32)(f) & 0x0FFFFFFC) >> 2), a);
 
-
 typedef struct {
 	const char *modname;
 	const char *modfile;
@@ -67,21 +66,8 @@ SceUID path_id, cfg_id;
 PspIoDrv *lflash;
 PspIoDrv *fatms;
 static PspIoDrvArg * ms_drv = NULL;
-STMOD_HANDLER previous = NULL;
-
-enum zeroCtrlSlideState {
-        ZERO_SLIDE_LOADING = 1,
-        ZERO_SLIDE_STARTING,
-        ZERO_SLIDE_STARTED,
-        ZERO_SLIDE_STOPPING,
-	ZERO_SLIDE_STOPPED,
-	ZERO_SLIDE_UNLOADED,
-};
 
 static const char redir_path[] = "/PSP/VSH";
-static const char useSlide[] = "Disabled";
-static const char slideContrast[] = "Disabled";
-static const unsigned long slideStartBtn = PSP_CTRL_HOME, slideStopBtn = PSP_CTRL_HOME;
 
 int (*msIoOpen)(PspIoDrvFileArg *arg, char *file, int flags, SceMode mode);
 int (*msIoGetstat)(PspIoDrvFileArg *arg, const char *file, SceIoStat *stat);
@@ -90,8 +76,6 @@ int (*IoOpen)(PspIoDrvFileArg *arg, char *file, int flags, SceMode mode);
 int (*IoGetstat)(PspIoDrvFileArg *arg, const char *file, SceIoStat *stat);
 
 int vshImposeGetParam(u32 value);
-
-int slideState;
 
 //OK
 void *zeroCtrlAllocUserBuffer(SceUID uid, int size) {
@@ -384,57 +368,6 @@ void zeroCtrlHookModule(void) {
     }
 }
 //OK
-int zeroCtrlGetSlideState(void) {
-	return slideState;
-}
-//OK
-void zeroCtrlSetSlideState(int state) {
-	slideState = state;
-}
-//OK
-int zeroCtrlDummyFunc(void) {
-        k1 = pspSdkSetK1(0);               
-	
-	if(zeroCtrlGetSlideState() == ZERO_SLIDE_STOPPING) {
-		//zeroCtrlWriteDebug("Unloading slide 1\n");
-		zeroCtrlSetSlideState(ZERO_SLIDE_STOPPED);
-		
-		pspSdkSetK1(k1);
-		return -1;
-	} else if(zeroCtrlGetSlideState() == ZERO_SLIDE_STOPPED) {
-		//zeroCtrlWriteDebug("Unloading slide 2\n");
-
-		pspSdkSetK1(k1);
-		return -1;
-		
-	}
-	
-        pspSdkSetK1(k1);
-        return 0;
-}
-//OK
-int zeroCtrlGetParam(u32 value) {
-        k1 = pspSdkSetK1(0);
-        
-        if(value == 0x8000000D) {	
-		if(zeroCtrlGetSlideState() == ZERO_SLIDE_STARTING) {			
-			//zeroCtrlWriteDebug("Starting slide\n");			
-			zeroCtrlSetSlideState(ZERO_SLIDE_STARTED);
-			
-			pspSdkSetK1(k1);
-			return 0;         
-		} else if(zeroCtrlGetSlideState() == ZERO_SLIDE_STOPPED) {	
-			pspSdkSetK1(k1);
-			return 0;      
-		}
-        } else {
-                //zeroCtrlWriteDebug("Not our param: 0x%08X\n\n", value);                
-        }
-        
-        pspSdkSetK1(k1);
-        return vshImposeGetParam(value);
-}
-//OK
 int set_registry_value(const char *dir, const char *name, unsigned int val)
 {
 	int ret = 0;
@@ -465,18 +398,7 @@ int set_registry_value(const char *dir, const char *name, unsigned int val)
 
 	return ret;
 }
-//OK
-int OnModuleStart(SceModule2 *mod) {
-        zeroCtrlWriteDebug("Module: %s\n", mod->modname);
-        
-        if(strcmp(mod->modname, "slide_plugin_module") == 0) {            
-                hook_import_bynid(mod, "sceBSMan", 0x23E3A9B6, zeroCtrlDummyFunc, 1);
-                hook_import_bynid(mod, "sceVshBridge", 0x639C3CB3, zeroCtrlGetParam, 1);				
-        }
-        
-       ClearCaches();
-       return previous ? previous(mod) : 0;
-}
+
 //OK
 int zeroCtrlLoadStartModule(SceSize args UNUSED, void *argp UNUSED) {	
 	SceUID modid;
@@ -508,15 +430,6 @@ void zeroCtrlCreatePatchThread(void) {
 	}	
 }
 //OK
-int zeroCtrlGetSlideConfig(const char *item UNUSED, char *value) {
-    strcpy(value, "Disabled");
-	return 0;
-}
-//OK
-void zeroCtrlSetSlideConfig(const char *item UNUSED, const char *value UNUSED) {
-    // NOP
-}
-//OK
 int zeroCtrlGetModel(void) {
 	int ret;
 	k1 = pspSdkSetK1(0);
@@ -526,30 +439,6 @@ int zeroCtrlGetModel(void) {
 	pspSdkSetK1(k1);
 	return ret;
 }
-//OK
-int zeroCtrlContrast2Hour(void) {		
-	if(strcmp(slideContrast, "Disabled") == 0) {
-		return -1;
-	} else if(strcmp(slideContrast, "1") == 0) {
-		return 6;
-	}  else if(strcmp(slideContrast, "2") == 0) {
-		return 9;
-	}  else if(strcmp(slideContrast, "3") == 0) {
-		return 12;
-	}  else if(strcmp(slideContrast, "4") == 0) {
-		return 15;
-	}  else if(strcmp(slideContrast, "5") == 0) {
-		return 18;
-	}  else if(strcmp(slideContrast, "6") == 0) {
-		return 21;
-	}  else if(strcmp(slideContrast, "7") == 0) {
-		return 3;
-	}  else if(strcmp(slideContrast, "8") == 0) {
-		return 0;
-	} 
-	
-	return -1;
-}
 
 #define ALL_ALLOW    (PSP_CTRL_UP|PSP_CTRL_RIGHT|PSP_CTRL_DOWN|PSP_CTRL_LEFT)
 #define ALL_BUTTON   (PSP_CTRL_TRIANGLE|PSP_CTRL_CIRCLE|PSP_CTRL_CROSS|PSP_CTRL_SQUARE)
@@ -557,47 +446,6 @@ int zeroCtrlContrast2Hour(void) {
 #define ALL_FUNCTION (PSP_CTRL_SELECT|PSP_CTRL_START|PSP_CTRL_HOME|PSP_CTRL_HOLD|PSP_CTRL_NOTE)
 #define ALL_CTRL  (ALL_ALLOW|ALL_BUTTON|ALL_TRIGGER|ALL_FUNCTION)
 
-//OK
-void zeroCtrlReadButtons(SceSize args UNUSED, void *argp UNUSED) {
-	SceCtrlLatch data;	
-	
-	while(1) {		
-		sceCtrlReadLatch(&data);
-	
-		if(zeroCtrlGetSlideState() == ZERO_SLIDE_STOPPED) {
-			if((data.uiMake & ALL_CTRL) == slideStartBtn) {     
-				zeroCtrlWriteDebug("Starting slide\n\n");		
-				
-				zeroCtrlSetSlideState(ZERO_SLIDE_STARTING); 								
-			}
-		} else if(zeroCtrlGetSlideState() == ZERO_SLIDE_STARTED) {
-			if((data.uiMake & ALL_CTRL) == slideStopBtn) {         		
-				zeroCtrlWriteDebug("Stopping slide\n\n");			
-				
-				zeroCtrlSetSlideState(ZERO_SLIDE_STOPPING);
-                
-			}
-		}
-		
-		if((zeroCtrlGetSlideState() == ZERO_SLIDE_STARTING) || (zeroCtrlGetSlideState() == ZERO_SLIDE_STARTED)) {
-			// NOP
-		}
-		
-		sceKernelDelayThread(10000);
-	}        
-}
-//OK
-void zeroCtrlCreateBtnThread(void) {	
-	SceUID thid;
-	
-	thid = sceKernelCreateThread("zeroctrl_btn", (void *)zeroCtrlReadButtons, 0x10, 0x10000, 0, NULL);
-	
-	if(thid >= 0) {
-		sceKernelStartThread(thid, 0, NULL);		
-	} else {
-		//zeroCtrlWriteDebug("Thread ID: 0x%08X\n", thid);	
-	}	
-}
 //OK
 int module_start(SceSize args UNUSED, void *argp UNUSED) {
 	model = sceKernelGetModel();
@@ -610,21 +458,9 @@ int module_start(SceSize args UNUSED, void *argp UNUSED) {
 	zeroCtrlResolveNids();
 
 	zeroCtrlHookModule();
-	zeroCtrlHookDriver();    
-    
-	zeroCtrlSetSlideState(ZERO_SLIDE_STOPPED);
-			
-	//Cool animation after reset vsh with no wallpaper enabled
-	set_registry_value("/CONFIG/SYSTEM", "slide_welcome", 1);	
+	zeroCtrlHookDriver();
 	
 	zeroCtrlCreatePatchThread();
-	
-	if((model != 4) && (model != 0)) {
-	    if(strcmp(useSlide, "Enabled") == 0) {					
-		zeroCtrlCreateBtnThread();
-		previous = sctrlHENSetStartModuleHandler(OnModuleStart);    
-	    }
-    }
     
     return 0;
 }
