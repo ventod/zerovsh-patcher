@@ -33,8 +33,6 @@
 #include "resolver.h"
 #include "hook.h"
 
-#include "zerovsh_upatcher.h"
-
 PSP_MODULE_INFO("ZeroVSH_Patcher_Kernel", 0x1007, 0, 2);
 PSP_MAIN_THREAD_ATTR(0);
 
@@ -371,49 +369,14 @@ void zeroCtrlHookModule(void) {
     }
 }
 //OK
-int zeroCtrlLoadStartModule(SceSize args UNUSED, void *argp UNUSED) {	
-	SceUID modid;
-	
-	//zeroCtrlWriteDebug("Thread\n");
-	
-	do {	sceKernelDelayThread(100000); } while(!sceKernelFindModuleByName("sceKernelLibrary"));	
-	modid = sceKernelLoadModuleBuffer(size_zerovsh_user_module, zerovsh_user_module, 0, NULL);
-	
-	if(modid >= 0) {
-		sceKernelStartModule(modid, 0, NULL, 0, NULL);		
-	} else {
-		//zeroCtrlWriteDebug("Module ID: 0x%08X\n", modid);
-	}
-	
-	sceKernelExitDeleteThread(0);
-	return 0;
-}
-//OK
-void zeroCtrlCreatePatchThread(void) {	
-	SceUID thid;
-	
-	thid = sceKernelCreateThread("zeroctrl_umod", zeroCtrlLoadStartModule, 0x10, 0x10000, 0, NULL);
-	
-	if(thid >= 0) {
-		sceKernelStartThread(thid, 0, NULL);		
-	} else {
-		//zeroCtrlWriteDebug("Thread ID: 0x%08X\n", thid);	
-	}	
-}
-//OK
 int module_start(SceSize args UNUSED, void *argp UNUSED) {
-	zeroCtrlWriteDebug("ZeroVSH Patcher v0.4\n");
-	zeroCtrlWriteDebug("Copyright 2011-2015 (C) NightStar3 and codestation\n");
+    zeroCtrlWriteDebug("ZeroVSH Patcher v0.4\n");
+    zeroCtrlWriteDebug("Copyright 2011-2015 (C) NightStar3 and codestation\n");
     zeroCtrlWriteDebug("Lite version mod by Vento\n");
-	zeroCtrlWriteDebug("[--- Lite version ---]\n\n");
-
-	zeroCtrlResolveNids();
-
-	zeroCtrlHookModule();
-	zeroCtrlHookDriver();
-	
-	zeroCtrlCreatePatchThread();
-    
+    zeroCtrlWriteDebug("[--- Lite version ---]\n\n");
+    zeroCtrlResolveNids();
+    zeroCtrlHookModule();
+    zeroCtrlHookDriver();
     return 0;
 }
 //OK
