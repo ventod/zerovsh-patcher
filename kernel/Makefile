@@ -1,5 +1,5 @@
 TARGET = zerovsh_patcher
-OBJS = main.o import.o blacklist.o resolver.o hook.o minini/minIni.o
+OBJS = main.o import.o blacklist.o resolver.o hook.o
 INCDIR =
 EXTRA_WARNS= -Wextra -Wfloat-equal -Wundef -Wshadow -Wpointer-arith -Wwrite-strings -Wunreachable-code
 MININI_DEFINES = -DNDEBUG -DINI_FILETYPE=SceUID -DPORTABLE_STRNICMP -DINI_NOFLOAT

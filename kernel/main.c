@@ -36,7 +36,6 @@
 #include "blacklist.h"
 #include "resolver.h"
 #include "hook.h"
-#include "minini/minIni.h"
 
 #include "zerovsh_upatcher.h"
 
@@ -80,12 +79,12 @@ enum zeroCtrlSlideState {
 	ZERO_SLIDE_UNLOADED,
 };
 
-static char redir_path[128];
-static char useSlide[128];
-static char slideContrast[128];
-static char ledDisable[128];
-static unsigned long slideStartBtn, slideStopBtn;
-static long b_level;
+static const char redir_path[] = "/PSP/VSH";
+static const char useSlide[] = "Disabled";
+static const char slideContrast[] = "Disabled";
+static const char ledDisable[] = "Disabled";
+static const unsigned long slideStartBtn = PSP_CTRL_HOME, slideStopBtn = PSP_CTRL_HOME;
+static const long b_level = -1;
 
 int (*msIoOpen)(PspIoDrvFileArg *arg, char *file, int flags, SceMode mode);
 int (*msIoGetstat)(PspIoDrvFileArg *arg, const char *file, SceIoStat *stat);
@@ -519,28 +518,13 @@ void zeroCtrlCreatePatchThread(void) {
 	}	
 }
 //OK
-int zeroCtrlGetSlideConfig(const char *item, char *value) {
-	k1 = pspSdkSetK1(0);
-	char *usermem = zeroCtrlAllocUserBuffer(cfg_id, 256);
-	
-	if(!usermem) {
-		pspSdkSetK1(k1);
-		return -1;
-	}
-	
-	memset(usermem, 0, 256);
-	ini_gets("SlidePlugin", item, "Disabled", usermem, sizeof(usermem), "ms0:/seplugins/zerovsh.ini");
-	strcpy(value, usermem);
-	
-	zeroCtrlFreeUserBuffer(cfg_id);
-	pspSdkSetK1(k1);
+int zeroCtrlGetSlideConfig(const char *item UNUSED, char *value) {
+    strcpy(value, "Disabled");
 	return 0;
 }
 //OK
-void zeroCtrlSetSlideConfig(const char *item, const char *value) {
-	k1 = pspSdkSetK1(0);
-	ini_puts("SlidePlugin", item,  value, "ms0:/seplugins/zerovsh.ini");
-	pspSdkSetK1(k1);
+void zeroCtrlSetSlideConfig(const char *item UNUSED, const char *value UNUSED) {
+    // NOP
 }
 //OK
 int zeroCtrlGetModel(void) {
@@ -702,20 +686,10 @@ int module_start(SceSize args UNUSED, void *argp UNUSED) {
 
 	zeroCtrlWriteDebug("ZeroVSH Patcher v0.4\n");
 	zeroCtrlWriteDebug("Copyright 2011-2015 (C) NightStar3 and codestation\n");
-	zeroCtrlWriteDebug("[--- Full version ---]\n\n");
+    zeroCtrlWriteDebug("Lite version mod by Vento\n");
+	zeroCtrlWriteDebug("[--- Lite version ---]\n\n");
 
 	zeroCtrlResolveNids();
-
-	const char *config = (model == 4) ? "ef0:/seplugins/zerovsh.ini" : "ms0:/seplugins/zerovsh.ini";
-
-	ini_gets("General", "RedirPath", "/PSP/VSH", redir_path, sizeof(redir_path), config);
-	
-	ini_gets("SlidePlugin", "ClockAndCalendar", "Disabled", useSlide, sizeof(useSlide), config);	
-	slideStartBtn = ini_getlhex("SlidePlugin", "StartBtn", PSP_CTRL_HOME, config);
-	slideStopBtn = ini_getlhex("SlidePlugin", "StopBtn", PSP_CTRL_HOME, config);
-	ini_gets("SlidePlugin", "Contrast", "Disabled", slideContrast, sizeof(slideContrast), config);
-	ini_gets("PowerSave", "LED", "Disabled", ledDisable, sizeof(ledDisable), config);
-	b_level = ini_getl("PowerSave", "Brightness", -1, config);
 	
 	//zeroCtrlWriteDebug("using [%s] as RedirPath\n", redir_path); 
 	//zeroCtrlWriteDebug("using [%s] as SlidePlugin\n", useSlide); 
