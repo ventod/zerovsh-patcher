@@ -22,7 +22,7 @@
 #include <pspsysmem.h>
 #include <pspmoduleinfo.h>
 #include <psploadcore.h>
-#include <psputilsforkernel.h>
+#include <psputils.h>
 #include <string.h>
 #include "logger.h"
 
