@@ -17,6 +17,9 @@
 
 #include "resolver.h"
 
+#include <pspmodulemgr.h>
+#include <pspmodulemgr_kernel.h>
+#include <pspsysmem.h>
 #include <pspmoduleinfo.h>
 #include <psploadcore.h>
 #include <psputilsforkernel.h>
