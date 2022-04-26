@@ -19,7 +19,7 @@ Removed funtionalities found in the original plugin:
 
 Now the plugin expect the PSP to be at least on FW version 6.60 and it loads custom files from "ef0:/PSP/VSH/" or "ms0:/PSP/VSH/" depending if you added "USE_EF0" as compile paramenter.
 
-There is still "a lot" of unused/useless code left around, I will later updated the mod with a cleaner version.
+There might be other unused/useless code left around, feel free to open a pull request or an issue.
 
 ---- Plugin Description ----
 
