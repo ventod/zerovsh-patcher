@@ -22,7 +22,7 @@
 #include "logger.h"
 
 //Global for blacklisting
-int g_blacklisted;
+extern int g_blacklisted;
 
 void zeroCtrlSetBlackListItems(char *item);
 int zeroCtrlIsBlacklistedFound(void);

@@ -38,7 +38,7 @@ typedef struct {
 	u32 count;
 } libname;
 
-u32 moduleprobe_nid;
+extern u32 moduleprobe_nid;
 
 void zeroCtrlResolveNids(void);
 
