@@ -118,6 +118,7 @@ libname libs[] = {
 
 void zeroCtrlResolveNids(void) {
 
+    const int fw_version = sceKernelDevkitVersion();
     u32 fw_nid, func;
     int count = 0;
 
@@ -125,11 +126,24 @@ void zeroCtrlResolveNids(void) {
     	if(i == libs[count].count) {
     		count++;
     	}
-
-    	fw_nid = nids[i].nid660;
+    	if(fw_version <= 0x03050210) {
+    		fw_nid = nids[i].nidsha1;
+    	} else if((fw_version >= 0x05000010) && (fw_version <= 0x05050010)) {
+            fw_nid = nids[i].nid5xx;
+        } else if(fw_version == 0x05070010) {
+            fw_nid = nids[i].nid570;
+    	} else if(fw_version == 0x06020010) {
+    		fw_nid = nids[i].nid620;
+    	} else if((fw_version >= 0x06030010) && (fw_version <= 0x06030910)) {
+    		fw_nid = nids[i].nid63x;
+        } else if((fw_version == 0x06060010) || (fw_version == 0x06060110)) {
+    		fw_nid = nids[i].nid660;
+    	} else {
+    		zeroCtrlWriteDebug("unknown firmware version: %08X\n", fw_version);
+    		return;
+    	}
 
     	func = sctrlHENFindFunction(libs[count].prxname, libs[count].name, fw_nid);
-
     	if(!func) {
     		zeroCtrlWriteDebug("Cannot find address for nid: %08X\n", fw_nid);
     		continue;
