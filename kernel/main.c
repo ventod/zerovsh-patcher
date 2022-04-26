@@ -94,11 +94,9 @@ int (* scePowerGetBusClockFrequency)(void) = NULL;
 int (* scePowerGetCpuClockFrequency)(void) = NULL;
 
 int vshImposeGetParam(u32 value);
-int sctrlHENSetSpeed(int cpufreq, int busfreq);
 int sceKernelPowerTick (int type);
 
 int slideState;
-int cpuOld = -1, busOld = -1;
 
 //OK
 void *zeroCtrlAllocUserBuffer(SceUID uid, int size) {
@@ -557,33 +555,6 @@ int zeroCtrlContrast2Hour(void) {
 	
 	return -1;
 }
-//OK
-void GetSpeed(int *cpufreq, int *busfreq) {
-	if(scePowerGetCpuClockFrequency == NULL) {
-		scePowerGetCpuClockFrequency = (void *)sctrlHENFindFunction("scePower_Service", "scePower", 0xFEE03A2F);		
-	} 
-	
-	zeroCtrlWriteDebug("Found getCpu\n\n");
-	
-	if(scePowerGetBusClockFrequency == NULL) {
-		scePowerGetBusClockFrequency = (void *)sctrlHENFindFunction("scePower_Service", "scePower", 0x478FE6F5);
-		
-	}	
-	
-	zeroCtrlWriteDebug("Found getBus\n\n");
-	
-	*cpufreq = scePowerGetCpuClockFrequency();
-	*busfreq = scePowerGetBusClockFrequency();	
-}
-//OK
-void zeroCtrlSetClockSpeed(void) {
-	k1 = pspSdkSetK1(0);
-	
-	GetSpeed(&cpuOld, &busOld);				
-	sctrlHENSetSpeed(333, 166);	
-	
-	pspSdkSetK1(k1);
-}
 
 #define ALL_ALLOW    (PSP_CTRL_UP|PSP_CTRL_RIGHT|PSP_CTRL_DOWN|PSP_CTRL_LEFT)
 #define ALL_BUTTON   (PSP_CTRL_TRIANGLE|PSP_CTRL_CIRCLE|PSP_CTRL_CROSS|PSP_CTRL_SQUARE)
@@ -610,10 +581,6 @@ void zeroCtrlReadButtons(SceSize args UNUSED, void *argp UNUSED) {
 				
 				zeroCtrlSetSlideState(ZERO_SLIDE_STOPPING);
                 
-				if((cpuOld != -1) && (busOld != -1)) {
-					sceKernelDelayThread(1000000);
-					sctrlHENSetSpeed(cpuOld, busOld);
-				}
 			}
 		}
 		

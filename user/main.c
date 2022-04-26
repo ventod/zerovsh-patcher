@@ -83,7 +83,6 @@ void zeroCtrlSetSlideConfig(const char *item, char *value);
 
 int zeroCtrlContrast2Hour(void);
 int zeroCtrlGetModel(void);
-void zeroCtrlSetClockSpeed(void);
 
 int model;
 
@@ -131,8 +130,6 @@ int zeroCtrlGetCurrentClockLocalTime(pspTime *ptime) {
 }
 //OK
 void InjectionEntryFuncInit(u32 *unk0) {
-	zeroCtrlSetClockSpeed();
-	
 	origFuncInit(unk0);
 }
 //OK

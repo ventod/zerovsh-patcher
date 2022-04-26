@@ -6,7 +6,6 @@
 	STUB_FUNC 0x159AF5CC, sctrlHENFindFunction
 	STUB_FUNC 0x78E46415, sctrlHENFindDriver
 	STUB_FUNC 0x1C90BECB, sctrlHENSetStartModuleHandler
-	STUB_FUNC 0xCC9ADCF8,sctrlHENSetSpeed
 	STUB_END
 
 	STUB_START "sceVshBridge" 0x00090000, 0x00010005

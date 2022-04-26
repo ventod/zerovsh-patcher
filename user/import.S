@@ -13,7 +13,6 @@
 	STUB_FUNC 0x13373573, zeroCtrlSetSlideConfig
 	STUB_FUNC 0x13373574, zeroCtrlGetModel
 	STUB_FUNC 0x13373575, zeroCtrlContrast2Hour
-	STUB_FUNC 0x13373578, zeroCtrlSetClockSpeed
 	STUB_END
 
 	STUB_START "sceRtc" 0x40090000, 0x00010005
