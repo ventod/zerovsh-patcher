@@ -16,7 +16,7 @@ PRX_EXPORTS = exports.exp
 
 PSP_FW_VERSION = 371
 
-LDFLAGS = -mno-crt0 -nostartfiles
+LDFLAGS = -nostartfiles
 
 USE_KERNEL_LIBS=1
 USE_KERNEL_LIBC=1

@@ -12,7 +12,7 @@ PRX_EXPORTS = exports.exp
 
 PSP_FW_VERSION = 371
 
-LDFLAGS = -mno-crt0 -nostartfiles
+LDFLAGS = -nostartfiles
 LIBS = 
 
 PSPSDK=$(shell psp-config --pspsdk-path)
