@@ -623,7 +623,7 @@ int module_start(SceSize args UNUSED, void *argp UNUSED) {
 	
 	zeroCtrlCreatePatchThread();
 	
-	if((model != 4) && (model != 0) && (sceKernelDevkitVersion() >= 0x06000010)) {
+	if((model != 4) && (model != 0)) {
 	    if(strcmp(useSlide, "Enabled") == 0) {					
 		zeroCtrlCreateBtnThread();
 		previous = sctrlHENSetStartModuleHandler(OnModuleStart);    
