@@ -13,8 +13,6 @@
 	STUB_FUNC 0x13373573, zeroCtrlSetSlideConfig
 	STUB_FUNC 0x13373574, zeroCtrlGetModel
 	STUB_FUNC 0x13373575, zeroCtrlContrast2Hour
-	STUB_FUNC 0x13373576, zeroCtrlSetLEDState
-	STUB_FUNC 0x13373577, zeroCtrlSetBrightness
 	STUB_FUNC 0x13373578, zeroCtrlSetClockSpeed
 	STUB_END
 

@@ -82,9 +82,7 @@ enum zeroCtrlSlideState {
 static const char redir_path[] = "/PSP/VSH";
 static const char useSlide[] = "Disabled";
 static const char slideContrast[] = "Disabled";
-static const char ledDisable[] = "Disabled";
 static const unsigned long slideStartBtn = PSP_CTRL_HOME, slideStopBtn = PSP_CTRL_HOME;
-static const long b_level = -1;
 
 int (*msIoOpen)(PspIoDrvFileArg *arg, char *file, int flags, SceMode mode);
 int (*msIoGetstat)(PspIoDrvFileArg *arg, const char *file, SceIoStat *stat);
@@ -579,41 +577,6 @@ void GetSpeed(int *cpufreq, int *busfreq) {
 	*busfreq = scePowerGetBusClockFrequency();	
 }
 //OK
-void zeroCtrlSetLEDState(void) {
-	k1 = pspSdkSetK1(0);
-	
-	if(strcmp(ledDisable, "Enabled") == 0) {
-		sceSysconCtrlLED(0, 0);
-		sceSysconCtrlLED(1, 0);
-		sceSysconCtrlLED(2, 0);
-		sceSysconCtrlLED(3, 0);
-		sceSysconCtrlLED(4, 0);
-	}
-	
-	pspSdkSetK1(k1);
-}
-//OK
-void zeroCtrlRestoreLEDState(void) {
-	if(strcmp(ledDisable, "Enabled") == 0) {
-		sceSysconCtrlLED(0, 1);
-		sceSysconCtrlLED(1, 1);
-		sceSysconCtrlLED(2, 1);
-		sceSysconCtrlLED(3, 1);
-		sceSysconCtrlLED(4, 1);
-	}
-}
-//OK
-void zeroCtrlSetBrightness(void) {
-	k1 = pspSdkSetK1(0);
-	
-	if(b_level != -1) {
-		sceDisplayGetBrightness(&brightness, NULL);
-		sceDisplaySetBrightness(b_level, 0);	
-	}
-	
-	pspSdkSetK1(k1);
-}
-//OK
 void zeroCtrlSetClockSpeed(void) {
 	k1 = pspSdkSetK1(0);
 	
@@ -646,14 +609,8 @@ void zeroCtrlReadButtons(SceSize args UNUSED, void *argp UNUSED) {
 			if((data.uiMake & ALL_CTRL) == slideStopBtn) {         		
 				zeroCtrlWriteDebug("Stopping slide\n\n");			
 				
-				zeroCtrlSetSlideState(ZERO_SLIDE_STOPPING);			
-				
-				if(b_level != -1) {
-					sceDisplaySetBrightness(brightness, 0);
-				}
-				
-				zeroCtrlRestoreLEDState();
-				
+				zeroCtrlSetSlideState(ZERO_SLIDE_STOPPING);
+                
 				if((cpuOld != -1) && (busOld != -1)) {
 					sceKernelDelayThread(1000000);
 					sctrlHENSetSpeed(cpuOld, busOld);
