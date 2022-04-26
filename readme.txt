@@ -13,11 +13,10 @@ Removed funtionalities found in the original plugin:
 * Brightness Control
 * CPU Clock Control
 * .ini settings file loading
-* Support for older FWs < 6.60
 * User thread (now only the kernel one is present)
 * All sceKernelDelayThread calls
 
-Now the plugin expect the PSP to be at least on FW version 6.60 and it loads custom files from "ef0:/PSP/VSH/" (internal storage PSP GO) or "ms0:/PSP/VSH/" (memory stick) depending if you used zerovsh_patcher_ef0.prx or zerovsh_patcher_ms0.prx.
+Now the plugin loads custom files only from "ef0:/PSP/VSH/" (internal storage PSP GO) or "ms0:/PSP/VSH/" (memory stick) depending if you used zerovsh_patcher_ef0.prx or zerovsh_patcher_ms0.prx.
 
 There might be other unused/useless code left around, feel free to open a pull request or an issue.
 
@@ -40,7 +39,7 @@ zerovsh_patcher_ms0.prx will load files from the Memory Stick at this path "ms0:
 
 ---- Bugs ----
 
--Does not work on 1k psp
+* Does not work on 1k psp
 
 ---- For Developers ----
 
@@ -51,9 +50,13 @@ The plugin will be compiled to the /bin folder in the trunk.
 
 -- CFW/HEN's supported by this mod --
 
-* ARK (tested only this one)
+* ARK (tested only this one on my PSP 3K 6.60 ARK 4.16)
+* M33
+* TN
 * PRO
 * ME
+* GEN
+* other???
 
 -- File types supported --
 
