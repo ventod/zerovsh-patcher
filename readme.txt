@@ -1,5 +1,5 @@
 ZeroVSH Patcher v0.4 - NightStar3 and codestation
-Lite mod by Vento
+Lite Mod 0.2 by Vento
 
 -- Original project  --
 
