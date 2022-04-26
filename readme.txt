@@ -46,14 +46,11 @@ Just run the script in the trunk corresponding to your operating system, and it 
 
 The plugin will be compiled to the /bin folder in the trunk.
 
--- CFW/HEN's supported --
+-- CFW/HEN's supported by this mod --
 
-* M33
-* TN
+* ARK (tested only this one)
 * PRO
 * ME
-* GEN
-* more, but untested
 
 -- File types supported --
 
