@@ -612,9 +612,6 @@ int module_start(SceSize args UNUSED, void *argp UNUSED) {
 	zeroCtrlWriteDebug("[--- Lite version ---]\n\n");
 
 	zeroCtrlResolveNids();
-	
-	//zeroCtrlWriteDebug("using [%s] as RedirPath\n", redir_path); 
-	//zeroCtrlWriteDebug("using [%s] as SlidePlugin\n", useSlide); 
 
 	zeroCtrlHookModule();
 	zeroCtrlHookDriver();    
