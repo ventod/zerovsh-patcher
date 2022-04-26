@@ -89,11 +89,7 @@ int (*msIoGetstat)(PspIoDrvFileArg *arg, const char *file, SceIoStat *stat);
 int (*IoOpen)(PspIoDrvFileArg *arg, char *file, int flags, SceMode mode);
 int (*IoGetstat)(PspIoDrvFileArg *arg, const char *file, SceIoStat *stat);
 
-int (* scePowerGetBusClockFrequency)(void) = NULL;
-int (* scePowerGetCpuClockFrequency)(void) = NULL;
-
 int vshImposeGetParam(u32 value);
-int sceKernelPowerTick (int type);
 
 int slideState;
 
@@ -584,7 +580,7 @@ void zeroCtrlReadButtons(SceSize args UNUSED, void *argp UNUSED) {
 		}
 		
 		if((zeroCtrlGetSlideState() == ZERO_SLIDE_STARTING) || (zeroCtrlGetSlideState() == ZERO_SLIDE_STARTED)) {
-			sceKernelPowerTick(6);
+			// NOP
 		}
 		
 		sceKernelDelayThread(10000);

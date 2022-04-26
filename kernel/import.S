@@ -25,7 +25,3 @@
 	STUB_FUNC 0x0CAE832B,sceRegCloseCategory
 	STUB_FUNC 0x0D69BF40,sceRegFlushCategory
 	STUB_END
-
-	STUB_START "sceSuspendForUser" 0x40090000, 0x00010005
-	STUB_FUNC 0x090CCB3F,sceKernelPowerTick
-	STUB_END
