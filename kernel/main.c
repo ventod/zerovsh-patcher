@@ -17,10 +17,6 @@
 
 //Headers
 #include <pspsdk.h>
-#include <psputilsforkernel.h>
-#include <pspiofilemgr.h>
-#include <pspiofilemgr_fcntl.h>
-#include <pspsysmem_kernel.h>
 
 // from CFW SDK
 #include "pspmodulemgr_kernel.h"
