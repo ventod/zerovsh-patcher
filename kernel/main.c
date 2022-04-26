@@ -195,7 +195,7 @@ char *zeroCtrlSwapFile(const char *file) {
         }
     }
 
-    sprintf(newfile, "%s%s", REDIR_PATH, oldfile);
+    sprintf(newfile, REDIR_PATH "%s", oldfile);
     pspSdkSetK1(k1);
 
     //zeroCtrlWriteDebug("-> Redirected file: %s\n", newfile);
@@ -337,7 +337,7 @@ int zeroCtrlModuleProbe(void *data, void *exec_info) {
     for (int i = 0; i < ITEMSOF(g_modules_mod); i++) {
         if (strcmp(modname, g_modules_mod[i].modname) == 0) {
             //zeroCtrlWriteDebug("probing: %s\n", g_modules_mod[i].modfile);
-            sprintf(filename, "%s%s/%s", DSK, REDIR_PATH, g_modules_mod[i].modfile);
+            sprintf(filename, DSK REDIR_PATH "/%s", g_modules_mod[i].modfile);
             fd = sceIoOpen(filename, PSP_O_RDONLY, 0644);
             if (fd >= 0) {
                 //zeroCtrlWriteDebug("writting %s into buffer\n", filename);
