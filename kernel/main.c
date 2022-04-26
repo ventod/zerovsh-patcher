@@ -21,10 +21,7 @@
 #include <pspiofilemgr.h>
 #include <pspiofilemgr_fcntl.h>
 #include <pspsysmem_kernel.h>
-#include <pspctrl.h>
 #include <pspreg.h>
-#include <pspsuspend.h>
-#include <pspdisplay_kernel.h>
 
 // from CFW SDK
 #include "pspmodulemgr_kernel.h"
@@ -74,8 +71,6 @@ int (*msIoGetstat)(PspIoDrvFileArg *arg, const char *file, SceIoStat *stat);
 
 int (*IoOpen)(PspIoDrvFileArg *arg, char *file, int flags, SceMode mode);
 int (*IoGetstat)(PspIoDrvFileArg *arg, const char *file, SceIoStat *stat);
-
-int vshImposeGetParam(u32 value);
 
 //OK
 void *zeroCtrlAllocUserBuffer(SceUID uid, int size) {
