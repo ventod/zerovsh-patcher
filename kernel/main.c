@@ -56,14 +56,24 @@ const modules g_modules_mod[] = {
 
 const char *exts[] = { ".rco", ".pmf", ".bmp", ".pgf", ".prx", ".dat" };
 
-int k1, model;
+int k1;
 SceUID path_id;
 
 PspIoDrv *lflash;
 PspIoDrv *fatms;
 static PspIoDrvArg * ms_drv = NULL;
 
-static const char redir_path[] = "/PSP/VSH";
+#define REDIR_PATH "/PSP/VSH"
+
+#ifdef USE_EF0
+    #define DRV "fatef"
+    #define DSK "ef0:"
+    #define DUMMY "ef0:/_dummy.prx"
+#else
+    #define DRV "fatms"
+    #define DSK "ms0:"
+    #define DUMMY "ms0:/_dummy.prx"
+#endif
 
 int (*msIoOpen)(PspIoDrvFileArg *arg, char *file, int flags, SceMode mode);
 int (*msIoGetstat)(PspIoDrvFileArg *arg, const char *file, SceIoStat *stat);
@@ -75,8 +85,7 @@ int (*IoGetstat)(PspIoDrvFileArg *arg, const char *file, SceIoStat *stat);
 void *zeroCtrlAllocUserBuffer(SceUID uid, int size) {
     void *addr;
     k1 = pspSdkSetK1(0);
-    uid = sceKernelAllocPartitionMemory(PSP_MEMORY_PARTITION_USER, "pathBuf",
-            PSP_SMEM_High, size, NULL);
+    uid = sceKernelAllocPartitionMemory(PSP_MEMORY_PARTITION_USER, "pathBuf", PSP_SMEM_High, size, NULL);
     addr = (uid >= 0) ? sceKernelGetBlockHeadAddr(uid) : NULL;
     pspSdkSetK1(k1);
     return addr;
@@ -192,7 +201,7 @@ char *zeroCtrlSwapFile(const char *file) {
         }
     }
 
-    sprintf(newfile, "%s%s", redir_path, oldfile);
+    sprintf(newfile, "%s%s", REDIR_PATH, oldfile);
     pspSdkSetK1(k1);
 
     //zeroCtrlWriteDebug("-> Redirected file: %s\n", newfile);
@@ -283,7 +292,7 @@ int zeroCtrlHookDriver(void) {
     int intr;
     SceUID fd;
 
-    fatms = sctrlHENFindDriver(model == 4 ? "fatef" : "fatms");
+    fatms = sctrlHENFindDriver(DRV);
     lflash = sctrlHENFindDriver("flashfat");
 
     if (!lflash || !fatms) {
@@ -310,7 +319,7 @@ int zeroCtrlHookDriver(void) {
     ClearCaches();
     //zeroCtrlWriteDebug("interrupts restored\n");
 
-    fd = sceIoOpen(model == 4 ? "ef0:/_dummy.prx" : "ms0:/_dummy.prx", PSP_O_RDONLY, 0644);
+    fd = sceIoOpen(DUMMY, PSP_O_RDONLY, 0644);
 
     // just in case that someone has a file like this
     if (fd >= 0) {
@@ -334,7 +343,7 @@ int zeroCtrlModuleProbe(void *data, void *exec_info) {
     for (int i = 0; i < ITEMSOF(g_modules_mod); i++) {
         if (strcmp(modname, g_modules_mod[i].modname) == 0) {
             //zeroCtrlWriteDebug("probing: %s\n", g_modules_mod[i].modfile);
-            sprintf(filename, "%s%s/%s", model == 4 ? "ef0:" : "ms0:", redir_path, g_modules_mod[i].modfile);
+            sprintf(filename, "%s%s/%s", DSK, REDIR_PATH, g_modules_mod[i].modfile);
             fd = sceIoOpen(filename, PSP_O_RDONLY, 0644);
             if (fd >= 0) {
                 //zeroCtrlWriteDebug("writting %s into buffer\n", filename);
@@ -392,21 +401,7 @@ void zeroCtrlCreatePatchThread(void) {
 	}	
 }
 //OK
-int zeroCtrlGetModel(void) {
-	int ret;
-	k1 = pspSdkSetK1(0);
-	
-	ret = sceKernelGetModel();
-	
-	pspSdkSetK1(k1);
-	return ret;
-}
-
-
-//OK
 int module_start(SceSize args UNUSED, void *argp UNUSED) {
-	model = sceKernelGetModel();
-
 	zeroCtrlWriteDebug("ZeroVSH Patcher v0.4\n");
 	zeroCtrlWriteDebug("Copyright 2011-2015 (C) NightStar3 and codestation\n");
     zeroCtrlWriteDebug("Lite version mod by Vento\n");
