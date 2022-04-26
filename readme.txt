@@ -30,7 +30,7 @@ Please scroll down for further information.
 
 ---- How to Use ----
 
-Copy zerovsh_patcher.prx in your seplugins folder.
+Copy zerovsh_patcher.prx in your seplugins folder and enable it inside VSH.TXT (or PLUGIN.TXT if you are on ARK CFW).
 
 Just place all the files you want to load from your memory stick or internal storage in the 
 folder "ef0:/PSP/VSH/" or "ms0:/PSP/VSH/" depending if you added "USE_EF0" as compile paramenter.
