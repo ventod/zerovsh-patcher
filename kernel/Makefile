@@ -13,7 +13,7 @@ ASFLAGS = $(CFLAGS)
 BUILD_PRX = 1
 PRX_EXPORTS = exports.exp
 
-PSP_FW_VERSION = 371
+PSP_FW_VERSION = 661
 
 LDFLAGS = -nostartfiles
 
