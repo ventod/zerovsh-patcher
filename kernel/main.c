@@ -57,7 +57,7 @@ const modules g_modules_mod[] = {
 const char *exts[] = { ".rco", ".pmf", ".bmp", ".pgf", ".prx", ".dat" };
 
 int k1, model;
-SceUID path_id, cfg_id;
+SceUID path_id;
 
 PspIoDrv *lflash;
 PspIoDrv *fatms;
