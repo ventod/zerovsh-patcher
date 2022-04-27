@@ -61,7 +61,7 @@ PspModuleImport * find_import_lib(SceModule2 * module, const char * library)
     unsigned int x = 0; while(x < module->stub_size)
     {
       //grab library stub
-      result = (PspModuleImport *)((u32)(module->stub_top) + x);
+      result = (PspModuleImport *)((unsigned int)(module->stub_top) + x);
       //library found
       if(result->name && strcmp(result->name, library) == 0)
       {

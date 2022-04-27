@@ -193,7 +193,7 @@ PspIoDrv *sctrlHENFindDriver(const char *drvname);
  * @returns - The function address or 0 if not found
  *
 */
-u32 sctrlHENFindFunction(const char* szMod, const char* szLib, u32 nid);
+unsigned int sctrlHENFindFunction(const char* szMod, const char* szLib, unsigned int nid);
 
 #define FindProc sctrlHENFindFunction
 
@@ -250,7 +250,7 @@ STMOD_HANDLER sctrlHENSetStartModuleHandler(STMOD_HANDLER handler);
  * This function is only available in the slim. The function will fail
  * if p2+p8 > 52 or p2 == 0
 */
-int sctrlHENSetMemory(u32 p2, u32 p8);
+int sctrlHENSetMemory(unsigned int p2, unsigned int p8);
 
 /**
  * Loads a module on next reboot. Only kernel mode.
@@ -281,7 +281,7 @@ void sctrlHENLoadModuleOnReboot(char *module_after, void *buf, int size, int fla
  * @param addr - the address of the original function
  * @param newaddr - the address of the new function
 */
-void sctrlHENPatchSyscall(u32 addr, void *newaddr);
+void sctrlHENPatchSyscall(unsigned int addr, void *newaddr);
 
 #endif
 

@@ -33,9 +33,9 @@ PSP_MODULE_INFO("ZeroVSH_Patcher_Kernel", 0x1007, 0, 2);
 PSP_MAIN_THREAD_ATTR(0);
 
 #define UNUSED __attribute__((unused))
-#define MAKE_CALL(a, f) _sw(0x0C000000 | (((u32)(f) >> 2) & 0x03FFFFFF), a); 
-#define REDIRECT_FUNCTION(a, f) _sw(0x08000000 | (((u32)(f) & 0x0FFFFFFC) >> 2), a); _sw(0x00000000, a+4); 
-#define MAKE_JUMP(a, f) _sw(0x08000000 | (((u32)(f) & 0x0FFFFFFC) >> 2), a);
+#define MAKE_CALL(a, f) _sw(0x0C000000 | (((unsigned int)(f) >> 2) & 0x03FFFFFF), a); 
+#define REDIRECT_FUNCTION(a, f) _sw(0x08000000 | (((unsigned int)(f) & 0x0FFFFFFC) >> 2), a); _sw(0x00000000, a+4); 
+#define MAKE_JUMP(a, f) _sw(0x08000000 | (((unsigned int)(f) & 0x0FFFFFFC) >> 2), a);
 
 typedef struct {
 	const char *modname;
@@ -290,7 +290,7 @@ int zeroCtrlHookDriver(void) {
     lflash = sctrlHENFindDriver("flashfat");
 
     if (!lflash || !fatms) {
-        //zeroCtrlWriteDebug("failed to hook drivers: lflash: %08X, fatms: %08X\n", (u32)lflash, (u32)fatms);
+        //zeroCtrlWriteDebug("failed to hook drivers: lflash: %08X, fatms: %08X\n", (unsigned int)lflash, (unsigned int)fatms);
         return 0;
     }  
 
@@ -320,7 +320,7 @@ int zeroCtrlHookDriver(void) {
         sceIoClose(fd);
     }
 
-    //zeroCtrlWriteDebug("ms_drv addr: %08X\n", (u32)ms_drv);
+    //zeroCtrlWriteDebug("ms_drv addr: %08X\n", (unsigned int)ms_drv);
 
     return 1;
 }
@@ -330,7 +330,7 @@ int zeroCtrlModuleProbe(void *data, void *exec_info) {
     SceSize size;
     SceUID fd;
 
-    char *modname = (char *) data + (((u32 *) data)[0x10] & 0x7FFFFFFF) + 4;
+    char *modname = (char *) data + (((unsigned int *) data)[0x10] & 0x7FFFFFFF) + 4;
 
     zeroCtrlSetBlackListItems(modname);
 
@@ -361,7 +361,7 @@ void zeroCtrlHookModule(void) {
     if (!module || hook_import_bynid(module, "LoadCoreForKernel", moduleprobe_nid, zeroCtrlModuleProbe, 0) < 0) {
         //zeroCtrlWriteDebug("failed to hook ProbeExecutableObject, nid: %08X\n", moduleprobe_nid);
     } else {
-        //zeroCtrlWriteDebug("ProbeExecutableObject nid: %08X, addr: %08X\n", moduleprobe_nid, (u32)sceKernelProbeExecutableObject);
+        //zeroCtrlWriteDebug("ProbeExecutableObject nid: %08X, addr: %08X\n", moduleprobe_nid, (unsigned int)sceKernelProbeExecutableObject);
     }
 }
 //OK

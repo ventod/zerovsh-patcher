@@ -26,12 +26,12 @@
 #include <string.h>
 #include "logger.h"
 
-#define MAKE_JUMP(a, f) _sw(0x08000000 | (((u32)(f) & 0x0ffffffc) >> 2), a);
+#define MAKE_JUMP(a, f) _sw(0x08000000 | (((unsigned int)(f) & 0x0ffffffc) >> 2), a);
 
-u32 sctrlHENFindFunction(const char *modname, const char *libname, u32 nid);
+unsigned int sctrlHENFindFunction(const char *modname, const char *libname, unsigned int nid);
 unsigned int sceKernelQuerySystemCall(void * function);
 
-u32 moduleprobe_nid;
+unsigned int moduleprobe_nid;
 
 nid nids[] =
 {
@@ -42,7 +42,7 @@ nid nids[] =
         0xE5E18A99,
         0x4621A9CC,
         0x7158CE7E,
-        (u32)sceKernelAllocPartitionMemory,
+        (unsigned int)sceKernelAllocPartitionMemory,
     },
     {
         0xB6D61D02,
@@ -51,7 +51,7 @@ nid nids[] =
         0x093DE56A,
         0x8FDAFC4C,
         0xC1A26C6F,
-        (u32)sceKernelFreePartitionMemory,
+        (unsigned int)sceKernelFreePartitionMemory,
     },
     {
         0x9D9A5BA1,
@@ -60,7 +60,7 @@ nid nids[] =
         0xFEB5C72B,
         0x52B54B93,
         0xF12A62F7,
-        (u32)sceKernelGetBlockHeadAddr,
+        (unsigned int)sceKernelGetBlockHeadAddr,
     },
     {
         0x8B61808B,
@@ -69,7 +69,7 @@ nid nids[] =
         0xAC9306F0,
         0x399FF74C,
         0xF153B371,
-        (u32)sceKernelQuerySystemCall,
+        (unsigned int)sceKernelQuerySystemCall,
     },
     {
         0xBF983EF2,
@@ -78,7 +78,7 @@ nid nids[] =
         0xB95FA50D,
         0x7B411250,
         0x41D10899,
-        (u32)sceKernelProbeExecutableObject,
+        (unsigned int)sceKernelProbeExecutableObject,
     },
     {
         0xCF8A41B1,
@@ -87,7 +87,7 @@ nid nids[] =
         0xBEF0A05E,
         0xEF8A0BEA,
         0xF6B1BF0F,
-        (u32)sceKernelFindModuleByName,
+        (unsigned int)sceKernelFindModuleByName,
     },
     {
         0xBA889C07,
@@ -96,7 +96,7 @@ nid nids[] =
         0x5352C26C,
         0x412D6ECC,
         0x4E62C48A,
-        (u32)sceKernelLoadModuleBuffer,
+        (unsigned int)sceKernelLoadModuleBuffer,
     },
     {
         0x50F0C1EC,
@@ -105,7 +105,7 @@ nid nids[] =
         0xDF8FFFAB,
         0xE6BF3960,
         0x3FF74DF1,
-        (u32)sceKernelStartModule,
+        (unsigned int)sceKernelStartModule,
     },
 };
 
@@ -119,10 +119,10 @@ libname libs[] = {
 void zeroCtrlResolveNids(void) {
 
     const int fw_version = sceKernelDevkitVersion();
-    u32 fw_nid, func;
+    unsigned int fw_nid, func;
     int count = 0;
 
-    for(u32 i = 0; i < ITEMSOF(nids); i++) {
+    for(unsigned int i = 0; i < ITEMSOF(nids); i++) {
     	if(i == libs[count].count) {
     		count++;
     	}
@@ -149,7 +149,7 @@ void zeroCtrlResolveNids(void) {
     		continue;
     	}
 
-    	if(nids[i].stub == (u32)sceKernelProbeExecutableObject) {
+    	if(nids[i].stub == (unsigned int)sceKernelProbeExecutableObject) {
     		   moduleprobe_nid = fw_nid;
     	}
 

@@ -23,22 +23,22 @@
 #define ITEMSOF(arr) (int)(sizeof(arr) / sizeof(0[arr]))
 
 typedef struct {
-	u32 nidsha1;
-	u32 nid5xx;
-	u32 nid570;
-	u32 nid620;
-	u32 nid63x;
-	u32 nid660;
-	u32 stub;
+	unsigned int nidsha1;
+	unsigned int nid5xx;
+	unsigned int nid570;
+	unsigned int nid620;
+	unsigned int nid63x;
+	unsigned int nid660;
+	unsigned int stub;
 } nid;
 
 typedef struct {
 	const char *prxname;
 	const char *name;
-	u32 count;
+	unsigned int count;
 } libname;
 
-extern u32 moduleprobe_nid;
+extern unsigned int moduleprobe_nid;
 
 void zeroCtrlResolveNids(void);
 
