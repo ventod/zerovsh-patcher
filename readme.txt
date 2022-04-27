@@ -1,5 +1,5 @@
 ZeroVSH Patcher v0.4 - NightStar3 and codestation
-Lite Mod 0.2 by Vento
+Lite Mod 0.3 by Vento
 
 -- Original project  --
 
@@ -39,7 +39,7 @@ zerovsh_patcher_ms0.prx will load files from the Memory Stick at this path "ms0:
 
 ---- Bugs ----
 
-* Does not work on 1k psp
+* Does not work on 1k psp (the original plugin had the same issue)
 
 ---- For Developers ----
 
