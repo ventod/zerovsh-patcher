@@ -15,15 +15,13 @@
  * along with ZeroVSH Patcher. If not, see <http://www.gnu.org/licenses/ .
  */
 
-#include "resolver.h"
 
-#include <pspmodulemgr.h>
 #include <pspmodulemgr_kernel.h>
 #include <pspsysmem.h>
-#include <pspmoduleinfo.h>
-#include <psploadcore.h>
 #include <psputils.h>
-#include <string.h>
+
+#include "psploadcore.h"
+#include "resolver.h"
 #include "logger.h"
 
 #define MAKE_JUMP(a, f) _sw(0x08000000 | (((unsigned int)(f) & 0x0ffffffc) >> 2), a);

@@ -18,14 +18,10 @@
 #ifndef BLACKLIST_H_
 #define BLACKLIST_H_
 
-#include <string.h>
-#include "logger.h"
-
 //Global for blacklisting
 extern int g_blacklisted;
 
 void zeroCtrlSetBlackListItems(char *item);
 int zeroCtrlIsBlacklistedFound(void);
-
 
 #endif

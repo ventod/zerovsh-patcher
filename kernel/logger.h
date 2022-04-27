@@ -18,10 +18,8 @@
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
-#include <string.h>
-#include <stdio.h>
-
 #ifdef DEBUG
+#include <stdio.h>
 #define zeroCtrlWriteDebug(format, ...) printf(format, ## __VA_ARGS__)
 #else
 #define zeroCtrlWriteDebug(format, ...)

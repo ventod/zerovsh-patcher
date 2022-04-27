@@ -16,13 +16,14 @@
  */
 
 //Headers
+#include <pspintrman.h>
+#include <pspsysmem.h>
 #include <pspsdk.h>
+#include <string.h>
+#include <stdio.h>
 
-// from CFW SDK
-#include "pspmodulemgr_kernel.h"
 #include "psploadcore.h"
 #include "systemctrl.h"
-#include "systemctrl_se.h"
 
 #include "logger.h"
 #include "blacklist.h"
@@ -368,8 +369,8 @@ void zeroCtrlHookModule(void) {
 int module_start(SceSize args UNUSED, void *argp UNUSED) {
     zeroCtrlWriteDebug("ZeroVSH Patcher v0.4\n");
     zeroCtrlWriteDebug("Copyright 2011-2015 (C) NightStar3 and codestation\n");
-    zeroCtrlWriteDebug("Lite version mod by Vento\n");
-    zeroCtrlWriteDebug("[--- Lite version ---]\n\n");
+    zeroCtrlWriteDebug("Lite Mod by Vento\n");
+    zeroCtrlWriteDebug("[--- Lite 0.3 ---]\n\n");
     zeroCtrlResolveNids();
     zeroCtrlHookModule();
     zeroCtrlHookDriver();

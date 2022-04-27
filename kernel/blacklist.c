@@ -15,11 +15,12 @@
  * along with ZeroVSH Patcher. If not, see <http://www.gnu.org/licenses/ .
  */
 
-//Our header
+#include <string.h>
+
 #include "blacklist.h"
 #include "resolver.h"
 
-//Global for blacklisting
+// Global for blacklisting
 int g_blacklisted = 0;
 
 static const char *g_blacklist_mod[] = {
@@ -30,7 +31,6 @@ static const char *g_blacklist_mod[] = {
 void zeroCtrlSetBlackListItems(char *item) {
     for (int i = 0; i < ITEMSOF(g_blacklist_mod); i++) {
         //zeroCtrlWriteDebug("-> Item %d: %s\n", i + 1, g_blacklist_mod[i]);
-
         if (!strcmp(item, g_blacklist_mod[i])) {
             g_blacklisted = 1;
         }
@@ -41,7 +41,7 @@ int zeroCtrlIsBlacklistedFound(void) {
     if (g_blacklisted == 1) {
         //zeroCtrlWriteDebug("Found\n\n");
         return 1;
+    } else {
+        return 0;
     }
-
-    return 0;
 }
