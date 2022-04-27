@@ -20,7 +20,8 @@
 
 #define ITEMSOF(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 
-typedef struct {
+typedef struct
+{
 	unsigned int nidsha1;
 	unsigned int nid5xx;
 	unsigned int nid570;
@@ -30,7 +31,8 @@ typedef struct {
 	unsigned int stub;
 } nid;
 
-typedef struct {
+typedef struct
+{
 	const char *prxname;
 	const char *name;
 	unsigned int count;
@@ -40,4 +42,4 @@ extern unsigned int moduleprobe_nid;
 
 void zeroCtrlResolveNids(void);
 
-#endif /* RESOLVER_H_ */
+#endif

@@ -13,7 +13,7 @@
  */
 PspIoDrv *sctrlHENFindDriver(const char *drvname);
 
-/** 
+/**
  * Finds a function.
  *
  * @param szMod - The module where to search the function
@@ -22,10 +22,7 @@ PspIoDrv *sctrlHENFindDriver(const char *drvname);
  *
  * @returns - The function address or 0 if not found
  *
-*/
-unsigned int sctrlHENFindFunction(const char* szMod, const char* szLib, unsigned int nid);
+ */
+unsigned int sctrlHENFindFunction(const char *szMod, const char *szLib, unsigned int nid);
 
 #endif
-
-
-

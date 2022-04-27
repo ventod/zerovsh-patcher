@@ -20,9 +20,9 @@
 
 #ifdef DEBUG
 #include <stdio.h>
-#define zeroCtrlWriteDebug(format, ...) printf(format, ## __VA_ARGS__)
+#define zeroCtrlWriteDebug(format, ...) printf(format, ##__VA_ARGS__)
 #else
 #define zeroCtrlWriteDebug(format, ...)
 #endif
 
-#endif /* LOGGER_H_ */
+#endif

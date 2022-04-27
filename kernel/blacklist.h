@@ -18,7 +18,7 @@
 #ifndef BLACKLIST_H_
 #define BLACKLIST_H_
 
-//Global for blacklisting
+// Global for blacklisting
 extern int g_blacklisted;
 
 void zeroCtrlSetBlackListItems(char *item);
