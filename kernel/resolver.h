@@ -18,9 +18,7 @@
 #ifndef RESOLVER_H_
 #define RESOLVER_H_
 
-#include <psptypes.h>
-
-#define ITEMSOF(arr) (int)(sizeof(arr) / sizeof(0[arr]))
+#define ITEMSOF(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 
 typedef struct {
 	unsigned int nidsha1;
